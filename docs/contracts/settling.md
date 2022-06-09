@@ -1,7 +1,7 @@
 ---
-sidebar_position: 1
+sidebar_position: 3
 ---
 
-# Settling Game Architecture
+# Modules
 
 This is everything you need to know
