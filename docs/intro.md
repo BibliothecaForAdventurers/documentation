@@ -2,7 +2,7 @@
 sidebar_position: 1
 ---
 
-# Orientation
+# Overview
 
 ### Welcome to the home for all the documentation about the Realms ecosystem.
 
