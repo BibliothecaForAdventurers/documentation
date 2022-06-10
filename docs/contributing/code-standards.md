@@ -6,31 +6,28 @@ sidebar_position: 1
 
 ---
 
-When contributing it is very important to follow these standards.
+This document describes the coding standards for the Realms Cairo contracts.
 
-### Commenting at beginning on contracts
+### General
 
-At the beginning of every contract make sure it is clear exactly what the contract does.
-
-```python
-# --------------------------------------------------------------------------------------------------------
-# This file contains default implementations for foreach, map, reduce and filter functions.
-# --------------------------------------------------------------------------------------------------------
-```
+- 1 line between function / blocks
+- file ends with a empty line
+- indentation: 4 spaces
 
 ### Commenting within contracts
 
-It is important that contracts are very readable. For all modules each function should have a specific purpose.
+Cairo does not support in-function docstrings, so the docs are put above the function definition in the following format:
 
 ```python
 
+# General explanation goes here.
+#
 # Params:
 #   - token_id: realm_id to make action on
 #   - resource_id: resource id to upgrade
 #   - level: level to upgrade resource to
 # Returns:
 #   - returns success
-
 func set_resource_level{
     syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr, bitwise_ptr : BitwiseBuiltin*
 }(token_id : Uint256, resource_id : felt, level : felt) -> (success: felt):
@@ -39,10 +36,11 @@ func set_resource_level{
 end
 ```
 
-### Function naming
+### Functions, parameters and variables
 
-Functions should all be snake case
+These should all be formatted in snake case.
 
+E.g.:
 ```python
 func set_resource_level{
     syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr, bitwise_ptr : BitwiseBuiltin*
@@ -52,26 +50,36 @@ func set_resource_level{
 end
 ```
 
-### Parameter naming
+### Contract names, events, structs and namespaces
 
-#### Function parameters & return parameters should all be snake case
-
-```python
-func set_resource_level{
-    syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr, bitwise_ptr : BitwiseBuiltin*
-}(token_id : Uint256, resource_id : felt, level : felt) -> (success: felt):
-    resource_levels.write(token_id, resource_id, level)
-    return (success)
-end
-```
-
-### Contract naming
-
-Contracts should be camel case.
+These should all be camel case.
 
 ```python
 ContractAbility.cairo
+
+# ...
+
+@event
+func Settled(owner : felt, token_id : Uint256):
+end
+
+# ...
+
+struct ShieldGameRole:
+    member man : felt
+    member woman : felt
+end
+
+# ...
+
+@contract_interface
+namespace IXoroshiro:
+    func next() -> (rnd : felt):
+    end
+end
 ```
+
+Events and namespaces also should be camel case.
 
 ### Function architecture & libraries
 
@@ -80,3 +88,71 @@ ContractAbility.cairo
 ### Unit tests
 
 #### Protostar
+
+### Default contract template
+
+```python
+# --------------------------------------------------------------------------------------------------------
+# <FILEDOC> & License
+# --------------------------------------------------------------------------------------------------------
+
+%lang starknet
+%builtins pedersen range_check [optional]
+
+# Standard imports
+
+# Custom imports
+
+#
+# Structs
+#
+
+#
+# Storage
+#
+
+#
+# Events (events should be CamelCased)
+#
+
+#
+# Constructor
+#
+
+#
+# Getters
+#
+
+#
+# Setters
+#
+
+#
+# External
+#
+
+#
+# Functions (you can rename this)
+#
+```
+
+### Interface template
+
+```python
+%lang starknet
+%builtins pedersen range_check [optional]
+
+# --------------------------------------------------------------------------------------------------------
+# <FILEDOC>
+# --------------------------------------------------------------------------------------------------------
+
+# Standard imports
+
+# Custom imports
+
+@contract_interface
+namespace NameSpaceExample:
+    func function_example(argument : felt) -> (answer : felt):
+    end
+end
+```
