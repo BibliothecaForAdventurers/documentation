@@ -97,7 +97,6 @@ Events and namespaces also should be camel case.
 # --------------------------------------------------------------------------------------------------------
 
 %lang starknet
-%builtins pedersen range_check [optional]
 
 # Standard imports
 
