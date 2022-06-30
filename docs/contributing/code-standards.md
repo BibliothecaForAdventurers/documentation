@@ -121,13 +121,64 @@ const usdc = 0x... becomes const `usdc_address` = 0x... and so on.
 
 ### Libraries
 
----
+After much trial and error we have landed on the very efficient pattern of writing stateless libraries for all our contracts. These namespaced libraries are pure functions that can be composed together and most importantly can be tested very quickly!
 
-## Testing
+First you need to write your library which is simple:
 
-#### Protostar
+```
+# Note namespaces must be CamelCase!!
+namespace Resources:
+    # Turns IDS into an Array
+    func _calculate_total_mintable_resources{
+        syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr
+    }(happiness : felt, realms_data : RealmData, days : felt, mint_percentage : felt) -> (
+        resource_mint : Uint256*
+    ):
+        alloc_locals
 
-#### Pytest
+        let (
+            r_1_output, r_2_output, r_3_output, r_4_output, r_5_output, r_6_output, r_7_output
+        ) = _calculate_all_resource_output(happiness, realms_data)
+
+        # USER CLAIM
+        let (r_1_user) = _calculate_resource_claimable(days, mint_percentage, r_1_output)
+        let (r_2_user) = _calculate_resource_claimable(days, mint_percentage, r_2_output)
+        let (r_3_user) = _calculate_resource_claimable(days, mint_percentage, r_3_output)
+        let (r_4_user) = _calculate_resource_claimable(days, mint_percentage, r_4_output)
+        let (r_5_user) = _calculate_resource_claimable(days, mint_percentage, r_5_output)
+        let (r_6_user) = _calculate_resource_claimable(days, mint_percentage, r_6_output)
+        let (r_7_user) = _calculate_resource_claimable(days, mint_percentage, r_7_output)
+
+        let (_, resource_mint : Uint256*) = _calculate_mintable_resources(
+            realms_data, r_1_user, r_2_user, r_3_user, r_4_user, r_5_user, r_6_user, r_7_user
+        )
+
+        return (resource_mint)
+    end
+end
+
+```
+
+Then you can use these libraries within your contracts by importing the namespace:
+
+```
+## import the namespace
+from contracts.settling_game.library.library_resources import Resources
+
+@view
+func get_all_vault_raidable{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}(
+    token_id : Uint256
+) -> (user_mint_len : felt, user_mint : Uint256*):
+
+    # HERE: importing the namespace and . selecting the function like so:
+    let (resource_mint : Uint256*) = Resources._calculate_total_mintable_resources(
+        100, realms_data, total_vault_days, PILLAGE_AMOUNT
+    )
+
+    return (realms_data.resource_number, resource_mint)
+end
+
+```
 
 ---
 
