@@ -10,6 +10,15 @@ This might take a while to do...
 
 
 ```bash
+# set your PK in ENV
+source realms_cli/.env.nile
+
+# FIRST TIME ONLY SETUP
+# You will need to make an Admin address which is the owner of all of these by:
+# This will create an admin account for you
+# Note you need to have an ENV setup with a PK named STARKNET_ADMIN_PRIVATE_KEY
+nile setup STARKNET_ADMIN_PRIVATE_KEY
+
 # you need to compile on contract changes, otherwise you deploy old contracts!
 nile compile
 
@@ -22,7 +31,31 @@ nile run --network goerli realms_cli/deploy/init_game.py
 
 # sets the costs of each item
 nile run --network goerli realms_cli/deploy/set_costs.py
+
+# Add new Modules 
+# NOTE: You need to update the internal object to the new module names... Do not just run this...
+nile run --network goerli realms_cli/deploy/new_module_deployer.py
+
+# Update tokens 
+nile run --network goerli realms_cli/deploy/update_token_helper.py
 ```
+
+## After deployments
+
+Due to the way proxies are deployed you need to set the abi of the implementation in the `goerli.deployments.txt` file. If you don't do this, you will not be able to call any view functions in the deployed contracts.
+
+Like so:
+
+```bash
+# before
+0x04b1bb18182f29c74d2c1ea1c34b40c8e57b34704cbdeee7bf9a3a6673b9d6fc:artifacts/abis/Food.json:Food
+0x008119b900f3c08066197cbe648fcb14fa4f66a3d35a857f3b5526f56dbf0068:artifacts/abis/PROXY_Logic.json:proxy_Food
+
+# after change
+0x04b1bb18182f29c74d2c1ea1c34b40c8e57b34704cbdeee7bf9a3a6673b9d6fc:artifacts/abis/Food.json:Food
+0x008119b900f3c08066197cbe648fcb14fa4f66a3d35a857f3b5526f56dbf0068:artifacts/abis/Food.json:proxy_Food
+```
+
 
 # Tips
 
