@@ -25,6 +25,19 @@ When opening VS Code, it should ask you to re-open the project in a container, i
 the .devcontainer folder. If not, you can open the Command Palette (`cmd + shift + p`),
 and run “Remote-Containers: Rebuild and Reopen in Container”.
 
+Then run
+
+```bash
+
+# installs python packages
+pip3 install -r ./requirements.txt
+
+# compiles contracts (artifacts are not version controlled)
+nile compile
+
+```
+
+
 ---
 ## If using development container
 The development container loads settings and the repository information on your local computer but cannot read your GitHub login credentials from your local computer.
