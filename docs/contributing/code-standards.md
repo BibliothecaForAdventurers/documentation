@@ -2,7 +2,7 @@
 sidebar_position: 1
 ---
 
-# Code standards for contributing
+# Cairo standards
 
 This document describes the coding standards for the Realms Cairo contracts.
 

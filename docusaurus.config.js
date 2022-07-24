@@ -8,7 +8,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 const config = {
   title: 'Realms Ecosystem',
   tagline: 'A guide to an on-chain composable game.',
-  url: 'https://your-docusaurus-test-site.com',
+  url: 'https://development.bibliothecadao.xyz',
   baseUrl: '/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',

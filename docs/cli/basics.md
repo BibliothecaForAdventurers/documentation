@@ -52,5 +52,3 @@ This assumes you have installed and created an Argent X account
 5. Save the printed public key in the goerli.accounts.json in address-1
 6. Copy your address from Argent and save it in both goerli.accounts.json and in goerli.deployments.txt (replacing the account-1 address)
 7. Rerun `pip install realms_cli/`
-
-
