@@ -2,7 +2,7 @@
 sidebar_position: 2
 ---
 
-# Deploying entire game state
+# Deploy Game
 
 The following scripts deploy all contracts necessary to test and play realms on localhost/goerli.
 
